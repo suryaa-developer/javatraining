@@ -5,7 +5,6 @@ import com.training.application.entity.AccountEntity;
 import com.training.application.repository.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 import java.util.InputMismatchException;
 import java.util.Optional;
@@ -22,6 +21,7 @@ public class AccountService {
             System.out.println("Valid id, continue..");
 
             AccountEntity accountEntity = new AccountEntity();
+
             accountEntity.setId(account.getId());
             accountEntity.setFirstName(account.getFirstName());
             accountEntity.setLastName(account.getLastName());
@@ -31,7 +31,7 @@ public class AccountService {
             accountEntity.setEmail(account.getEmail());
 
             accountEntity = accountRepository.save(accountEntity);
-            id = accountEntity.getId();
+         id = accountEntity.getId();
             System.out.println("Customer is created");
         } else
             System.out.println("invalid input");
@@ -62,7 +62,7 @@ public class AccountService {
 
     }
 
-    public void updateCustomer(Account account) {
+    public void updateAccount(Account account) {
 
         Optional<AccountEntity> optionalCustomerEntity = accountRepository.findById(account.getId());
         if (optionalCustomerEntity.isPresent()) {
@@ -86,26 +86,19 @@ public class AccountService {
         }
 
     }
-    public Account deleteAccount(int id) {
+    public void deleteAccount(int id) {
         Optional<AccountEntity> optionalCustomerEntity = accountRepository.findById(id);
         if (optionalCustomerEntity.isPresent()) {
             AccountEntity accountEntity = optionalCustomerEntity.get();
 
-
-            Account account = new Account();
-
-            account.setId(accountEntity.getId());
-            account.setFirstName(accountEntity.getFirstName());
-            account.setLastName(accountEntity.getLastName());
-            account.setUserName(accountEntity.getUserName());
-            account.setPhoneNumber(accountEntity.getPhoneNumber());
-            account.setPassword(accountEntity.getPassword());
-            account.setEmail(accountEntity.getEmail());
             accountRepository.deleteById(id);
-            return account;
         } else {
             System.out.println("There is no customer with this id" + id);
-            return null;
+           throw new InputMismatchException("customer not found");
         }
+
     }
 }
+
+
+

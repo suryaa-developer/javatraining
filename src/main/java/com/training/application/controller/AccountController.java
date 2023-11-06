@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.InputMismatchException;
+
 @RestController
 
 public class AccountController {
@@ -37,11 +39,11 @@ public class AccountController {
                 ResponseEntity response = new ResponseEntity("Given customer id is not found", HttpStatus.NOT_FOUND);
                 return response;
             } else {
-                ResponseEntity response = new ResponseEntity("Given customer account is read successfully ", HttpStatus.OK);
+                ResponseEntity response = new ResponseEntity(account, HttpStatus.OK);
                 return response;
             }
         }catch (Exception exception) {
-            ResponseEntity response = new ResponseEntity("Temporarily service unavailable",HttpStatus.SERVICE_UNAVAILABLE);
+            ResponseEntity response = new ResponseEntity("Temporarily service unavailable",HttpStatus.INTERNAL_SERVER_ERROR);
             return response;
         }
     }
@@ -51,12 +53,12 @@ public class AccountController {
 
 
                 try {
-                    accountService.createAccount(account);
-                    ResponseEntity response = new ResponseEntity("updated successfully", HttpStatus.OK);
+                    accountService.updateAccount(account);
+                    ResponseEntity response = new ResponseEntity(account, HttpStatus.OK);
                     return response;
 
                 } catch (Exception exception) {
-                    ResponseEntity response = new ResponseEntity("Temporarily service unavailable", HttpStatus.SERVICE_UNAVAILABLE);
+                    ResponseEntity response = new ResponseEntity("Temporarily service unavailable", HttpStatus.INTERNAL_SERVER_ERROR);
                     return response;
                 }
             }
@@ -64,17 +66,17 @@ public class AccountController {
     @RequestMapping(value= "/account-service/delete-customer",method = RequestMethod.DELETE)
     public ResponseEntity deleteAccount(@RequestParam (name = "id") int id) {
         System.out.println(" Given customer id is" + id);
-        Account account = accountService.readAccount(id);
         try {
-            if (account == null) {
-                ResponseEntity response = new ResponseEntity("Given customer id is not found", HttpStatus.NOT_FOUND);
-                return response;
-            } else {
-                ResponseEntity response = new ResponseEntity("Given customer id is deleted", HttpStatus.OK);
-                return response;
-            }
-        }catch (Exception exception) {
-            ResponseEntity response = new ResponseEntity("Temporarily service unavailable",HttpStatus.SERVICE_UNAVAILABLE);
+            accountService.deleteAccount(id);
+
+            ResponseEntity response = new ResponseEntity("Given customer id is deleted", HttpStatus.OK);
+            return response;
+
+        } catch (InputMismatchException ime) {
+            ResponseEntity response = new ResponseEntity("Customer not found in DB", HttpStatus.NOT_FOUND);
+            return response;
+        } catch (Exception exception) {
+            ResponseEntity response = new ResponseEntity("Temporarily service unavailable", HttpStatus.INTERNAL_SERVER_ERROR);
             return response;
         }
     }

@@ -18,31 +18,31 @@ public class AccountEntity {
  //   @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     int id;
-    @Column(name = "firstName")
+    @Column(name = "first_name")
     String firstName;
-    @Column(name = "lastName")
+    @Column(name = "last_name")
     String lastName;
-    @Column(name = "userName")
+    @Column(name = "user_name")
     String userName;
-    @Column(name = "phoneNumber")
-    int PhoneNumber;
+    @Column(name = "phone_number")
+    long PhoneNumber;
     @Column(name = "password")
     int password;
     @Column(name = "email")
     String email;
 
-    @Column(name = "createdTime")
+    @Column(name = "created_time")
     @CreationTimestamp
     Timestamp createdTime;
 
-    @Column(name = "updatedTime")
+    @Column(name = "updated_time")
     @UpdateTimestamp
     Timestamp updatedTime;
 
-    @Column(name = "createdBy")
+    @Column(name = "created_by")
     String createdBy;
 
-    @Column(name = "updatedBy")
+    @Column(name = "updated_by")
     String updatedBy;
 
 }

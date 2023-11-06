@@ -12,6 +12,7 @@ import java.util.List;
 public class SpringSampleProjectApplication {
 
     public static void main(String[] args) {
+
         SpringApplication.run(SpringSampleProjectApplication.class, args);
     }
 

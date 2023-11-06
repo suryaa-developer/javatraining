@@ -10,7 +10,9 @@ public class Account {
     String firstName;
    String lastName;
     String userName;
-    int phoneNumber;
+    long phoneNumber;
     int password;
     String email;
+    String createdBy;
+    String updatedBy;
 }
