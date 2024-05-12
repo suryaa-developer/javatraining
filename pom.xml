@@ -43,7 +43,7 @@
 
         <moco.version>0.11.0</moco.version>
         <easymock.version>2.4</easymock.version>
-        <json.version>20200518</json.version>
+        <json.version>20231013</json.version>
         <objenesis.version>2.5</objenesis.version>
 
         <!-- Code Quality modules -->
